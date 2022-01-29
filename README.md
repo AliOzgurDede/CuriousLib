@@ -1,4 +1,4 @@
-# CuriousLib
+# CuriousLib ![release](https://img.shields.io/badge/release-v0.9-orange)
 Ready-to-use C# Class Library for Statistical Computations
 
 ## Usage
