@@ -46,7 +46,7 @@ public class DataSet<T> : List<T>
 | ------- | --------- | ----------- |
 | LinearRegression | Double | Conducts point estimation of independent variable X using linear regression line |
 
-### StationaryDataSet : DataSet
+### SeasonalDataSet : DataSet
 | Properties | Data Type | Description |
 | ---------- | --------- | ----------- |
 | NumberOfSeasons | Integer | Gets or sets the number of seasons in a seasonal DataSet |
