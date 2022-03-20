@@ -1,8 +1,16 @@
-# CuriousLib ![release](https://img.shields.io/badge/release-v1.0-green) ![nuget](https://img.shields.io/nuget/v/CuriousLib) ![license](https://img.shields.io/github/license/AliOzgurDede/CuriousLib?color=red)  
+<p align="center">
+  <img width="200" alt="Icon" src="https://user-images.githubusercontent.com/74831928/155857344-0348b7c6-0a61-431e-acea-0b826adeae26.png">   
+</p>
+
+<h1 align="center" style="margin-top: 0px;">CuriousLib</h1>
+
+<div align="center">
+  
 Ready-to-use C# Class Library for Statistical Computations  
-
-<img width="200" alt="Icon" src="https://user-images.githubusercontent.com/74831928/155857344-0348b7c6-0a61-431e-acea-0b826adeae26.png">  
-
+    
+![release](https://img.shields.io/badge/release-v1.0-green) ![nuget](https://img.shields.io/nuget/v/CuriousLib) ![license](https://img.shields.io/github/license/AliOzgurDede/CuriousLib?color=red) 
+  
+</div>
 
 ## Usage
 To use this library, it is necessary to create an instance of DataSet collection 
