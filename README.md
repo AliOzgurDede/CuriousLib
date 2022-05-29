@@ -6,9 +6,9 @@
 
 <div align="center">
   
-Ready-to-use C# Class Library for Statistical Computations  
+C# Class Library for Statistical Computations  
     
-![release](https://img.shields.io/badge/release-v1.0-green) ![nuget](https://img.shields.io/nuget/v/CuriousLib) ![license](https://img.shields.io/github/license/AliOzgurDede/CuriousLib?color=red) 
+![release](https://img.shields.io/badge/release-v1.1-green) ![nuget](https://img.shields.io/nuget/v/CuriousLib) ![license](https://img.shields.io/github/license/AliOzgurDede/CuriousLib?color=red) 
   
 </div>
 
@@ -35,6 +35,8 @@ public class DataSet<T> : List<T>
 | Mean | Double | Gets the mean of a DataSet |
 | StandartDeviation | Double | Gets the standart deviation of a DataSet |
 | Skewness | Double | Gets the skewness of a DataSet |
+| IsNormal | Boolean | Gets whether a dataset is normal distributed or not |
+| IsUniform | Boolean | Gets whether a dataset is uniformly distributed or not |
 
 | Methods | Data Type | Description |
 | ------- | --------- | ----------- |
@@ -67,6 +69,15 @@ public class DataSet<T> : List<T>
 | Methods | Data Type | Description |
 | ------- | --------- | ----------- |
 | SeasonalEstimate | Double | Conducts point estimation of selected index using seasonal factors |
+
+### Miscellaneuos
+| Static Methods | Data Type | Description |
+| -------------- | --------- | ----------- |
+| CalculateMeanAbsoluteError | Double | Returns the mean absolute forecast error of a DataSet |
+| CalculateMeanSquaredError | Double | Returns the mean squared forecast error of a DataSet |
+| Covariance | Double | Calculates covariance of two DataSets |
+| Correlation | Double | Calculates coefficient of correlation between two DataSets |
+| Rsquared | Double | Calculates coefficient of determination (R Squared) between two DataSets |
 
 ### Generators
 | Static Methods | Data Type | Description |
