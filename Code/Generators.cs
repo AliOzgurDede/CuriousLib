@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.SqlClient;
+using System.Data.OleDb;
 
 namespace CuriousLib
 {
     /// <summary>
-    /// Class for generating DataSet collection members from GUI controls
+    /// Class to generate DataSet collection members
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public static class Generators<T>
@@ -115,6 +117,174 @@ namespace CuriousLib
             {
                 T value = (T)listbox.Items[i];
                 dataset.Add(value);
+            }
+        }
+
+        /// <summary>
+        /// Generating collection members from SQL Server
+        /// </summary>
+        /// <param name="dataset"></param>
+        /// <param name="sqlConnection"></param>
+        /// <param name="queryString"></param>
+        /// <exception cref="Exception"></exception>
+        public static void GeneratingFromSQL(DataSet<double> dataset, SqlConnection sqlConnection, string queryString)
+        {
+            SqlCommand sqlCommand = new SqlCommand();
+            sqlCommand.Connection = sqlConnection;
+            sqlCommand.CommandText = queryString;
+            SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+            
+            if (sqlDataReader.FieldCount == 1)
+            {
+                while (sqlDataReader.Read())
+                {
+                    double value = (double)sqlDataReader.GetValue(0);
+                    dataset.Add(value);
+                }
+            }
+            else
+            {
+                throw new Exception("SQL Query result is not one dimensional");
+            }
+        }
+
+        /// <summary>
+        /// Generating collection members from SQL Server
+        /// </summary>
+        /// <param name="dataset"></param>
+        /// <param name="sqlConnection"></param>
+        /// <param name="queryString"></param>
+        /// <exception cref="Exception"></exception>
+        public static void GeneratingFromSQL(DataSet<string> dataset, SqlConnection sqlConnection, string queryString)
+        {
+            SqlCommand sqlCommand = new SqlCommand();
+            sqlCommand.Connection = sqlConnection;
+            sqlCommand.CommandText = queryString;
+            SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+
+            if (sqlDataReader.FieldCount == 1)
+            {
+                while (sqlDataReader.Read())
+                {
+                    string value = sqlDataReader.GetValue(0).ToString();
+                    dataset.Add(value);
+                }
+            }
+            else
+            {
+                throw new Exception("SQL Query result is not one dimensional");
+            }
+        }
+
+        /// <summary>
+        /// Generating collection members from SQL Server
+        /// </summary>
+        /// <param name="dataset"></param>
+        /// <param name="sqlConnection"></param>
+        /// <param name="queryString"></param>
+        /// <exception cref="Exception"></exception>
+        public static void GeneratingFromSQL(DataSet<T> dataset, SqlConnection sqlConnection, string queryString)
+        {
+            SqlCommand sqlCommand = new SqlCommand();
+            sqlCommand.Connection = sqlConnection;
+            sqlCommand.CommandText = queryString;
+            SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+
+            if (sqlDataReader.FieldCount == 1)
+            {
+                while (sqlDataReader.Read())
+                {
+                    T value = (T)sqlDataReader.GetValue(0);
+                    dataset.Add(value);
+                }
+            }
+            else
+            {
+                throw new Exception("SQL Query result is not one dimensional");
+            }
+        }
+
+        /// <summary>
+        /// Generating collection members from MS Access Database
+        /// </summary>
+        /// <param name="dataset"></param>
+        /// <param name="oleDbConnection"></param>
+        /// <param name="queryString"></param>
+        /// <exception cref="Exception"></exception>
+        public static void GeneratingFromAccessDB(DataSet<double> dataset, OleDbConnection oleDbConnection, string queryString)
+        {
+            OleDbCommand oleDbCommand = new OleDbCommand();
+            oleDbCommand.Connection = oleDbConnection;
+            oleDbCommand.CommandText = queryString;
+            OleDbDataReader oleDbDataReader = oleDbCommand.ExecuteReader();
+
+            if (oleDbDataReader.FieldCount == 1)
+            {
+                while (oleDbDataReader.Read())
+                {
+                    double value = (double)oleDbDataReader.GetValue(0);
+                    dataset.Add(value);
+                }
+            }
+            else
+            {
+                throw new Exception("OleDb Query result is not one dimensional");
+            }
+        }
+
+        /// <summary>
+        /// Generating collection members from MS Access Database
+        /// </summary>
+        /// <param name="dataset"></param>
+        /// <param name="oleDbConnection"></param>
+        /// <param name="queryString"></param>
+        /// <exception cref="Exception"></exception>
+        public static void GeneratingFromAccessDB(DataSet<string> dataset, OleDbConnection oleDbConnection, string queryString)
+        {
+            OleDbCommand oleDbCommand = new OleDbCommand();
+            oleDbCommand.Connection = oleDbConnection;
+            oleDbCommand.CommandText = queryString;
+            OleDbDataReader oleDbDataReader = oleDbCommand.ExecuteReader();
+
+            if (oleDbDataReader.FieldCount == 1)
+            {
+                while (oleDbDataReader.Read())
+                {
+                    string value = oleDbDataReader.GetValue(0).ToString();
+                    dataset.Add(value);
+                }
+            }
+            else
+            {
+                throw new Exception("OleDb Query result is not one dimensional");
+            }
+        }
+
+        /// <summary>
+        /// Generating collection members from MS Access Database
+        /// </summary>
+        /// <param name="dataset"></param>
+        /// <param name="oleDbConnection"></param>
+        /// <param name="queryString"></param>
+        /// <exception cref="Exception"></exception>
+        public static void GeneratingFromAccessDB(DataSet<T> dataset, OleDbConnection oleDbConnection, string queryString)
+        {
+            OleDbCommand oleDbCommand = new OleDbCommand();
+            oleDbCommand.Connection = oleDbConnection;
+            oleDbCommand.CommandText = queryString;
+            OleDbDataReader oleDbDataReader = oleDbCommand.ExecuteReader();
+
+            if (oleDbDataReader.FieldCount == 1)
+            {
+                while (oleDbDataReader.Read())
+                {
+                    T value = (T)oleDbDataReader.GetValue(0);
+                    dataset.Add(value);
+                }
+            }
+            else
+            {
+                throw new Exception("OleDb Query result is not one dimensional");
             }
         }
     }
