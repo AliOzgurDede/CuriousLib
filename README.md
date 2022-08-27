@@ -8,7 +8,7 @@
   
 C# Class Library for Statistical Computations  
     
-![release](https://img.shields.io/badge/release-v1.1-green) ![nuget](https://img.shields.io/nuget/v/CuriousLib) ![license](https://img.shields.io/github/license/AliOzgurDede/CuriousLib?color=red) 
+![release](https://img.shields.io/badge/release-v1.2-green) ![nuget](https://img.shields.io/nuget/v/CuriousLib) ![license](https://img.shields.io/github/license/AliOzgurDede/CuriousLib?color=red) 
   
 </div>
 
@@ -84,6 +84,8 @@ public class DataSet<T> : List<T>
 | -------------- | --------- | ----------- |
 | GeneratingFromDataGridView | Void | Generating collection members from WinForms DataGridView Control (+3 overloads) |
 | GeneratingFromListBox | Void | Generating collection members from WinForms ListBox Control (+3 overloads) |
+| GeneratingFromSQL | Void | Generating collection members from SQL Server (+3 overloads) |
+| GeneratingFromAccessDB | Void | Generating collection members from MS Access Database (+3 overloads) |
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
