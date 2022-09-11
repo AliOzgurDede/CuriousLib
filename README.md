@@ -8,7 +8,7 @@
   
 C# Class Library for Statistical Computations  
     
-![release](https://img.shields.io/badge/release-v1.2-green) ![nuget](https://img.shields.io/nuget/v/CuriousLib) ![license](https://img.shields.io/github/license/AliOzgurDede/CuriousLib?color=red) 
+![release](https://img.shields.io/badge/release-v1.3-green) ![nuget](https://img.shields.io/nuget/v/CuriousLib) ![license](https://img.shields.io/github/license/AliOzgurDede/CuriousLib?color=red) 
   
 </div>
 
@@ -33,15 +33,20 @@ public class DataSet<T> : List<T>
 | Range | Integer | Gets the range of a DataSet |
 | Size | Integer | Gets the size of a DataSet |
 | Mean | Double | Gets the mean of a DataSet |
+| Median | Double | Gets the median of a DataSet |
+| Mode | Double | Gets the mode of a DataSet |
 | StandartDeviation | Double | Gets the standart deviation of a DataSet |
 | Skewness | Double | Gets the skewness of a DataSet |
+| Kurtosis | Double | Gets the kurtosis of a DataSet |
 | IsNormal | Boolean | Gets whether a dataset is normal distributed or not |
 | IsUniform | Boolean | Gets whether a dataset is uniformly distributed or not |
+| IsExponential | Boolean | Gets whether a dataset is exponentially distributed or not |
 
 | Methods | Data Type | Description |
 | ------- | --------- | ----------- |
 | CalculateZvalue | Double | Calculates the standart Z value for a given X value from a DataSet |
 | Smooth | DataSet | Smooths a DataSet for a given alpha parameter |
+| DetectOutliers | DataSet | Returns the outlier values of a DataSet |
 
 ### StationaryDataSet : DataSet
 | Methods | Data Type | Description |
@@ -70,7 +75,7 @@ public class DataSet<T> : List<T>
 | ------- | --------- | ----------- |
 | SeasonalEstimate | Double | Conducts point estimation of selected index using seasonal factors |
 
-### Miscellaneuos
+### Miscellaneous
 | Static Methods | Data Type | Description |
 | -------------- | --------- | ----------- |
 | CalculateMeanAbsoluteError | Double | Returns the mean absolute forecast error of a DataSet |
