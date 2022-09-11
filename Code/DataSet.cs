@@ -34,14 +34,7 @@ namespace CuriousLib
         /// </summary>
         public DataSetPattern Pattern
         {
-            get
-            {
-                return pattern;
-            }
-            set
-            {
-                pattern = value;
-            }
+            get; set;
         }
         public enum DataSetPattern
         {
@@ -49,6 +42,17 @@ namespace CuriousLib
             Trending,
             Seasonal,
             None
+        }
+
+        /// <summary>
+        /// Gets the size of a DataSet
+        /// </summary>
+        public int Size
+        {
+            get
+            {
+                return (Convert.ToInt32(this.Count));
+            }
         }
 
         /// <summary>
@@ -85,17 +89,6 @@ namespace CuriousLib
         }
 
         /// <summary>
-        /// Gets the size of a DataSet
-        /// </summary>
-        public double Size
-        {
-            get
-            {
-                return (Convert.ToDouble(this.Count));
-            }
-        }
-
-        /// <summary>
         /// Gets the mean of a DataSet
         /// </summary>
         public double Mean
@@ -103,6 +96,28 @@ namespace CuriousLib
             get
             {
                 return (this.CalculateMean());
+            }
+        }
+
+        /// <summary>
+        /// Gets the median of a DataSet
+        /// </summary>
+        public double Median
+        {
+            get
+            {
+                return (this.CalculateMedian());
+            }
+        }
+
+        /// <summary>
+        /// Gets the mode of a DataSet
+        /// </summary>
+        public double Mode
+        {
+            get
+            {
+                return (this.CalculateMode());
             }
         }
 
@@ -129,7 +144,29 @@ namespace CuriousLib
         }
 
         /// <summary>
-        /// Gets whether a dataset is normal distributed or not
+        /// Gets the kurtosis of a DataSet
+        /// </summary>
+        public double Kurtosis
+        {
+            get
+            {
+                return (this.CalculateKurtosis());
+            }
+        }
+
+        /// <summary>
+        /// Gets the coefficient of variation of a DataSet
+        /// </summary>
+        public double CoefficientOfVariation
+        {
+            get
+            {
+                return (this.StandartDeviation / this.Mean);
+            }
+        }
+
+        /// <summary>
+        /// Gets whether a DataSet is normal distributed or not
         /// </summary>
         public bool IsNormal
         {
@@ -140,13 +177,24 @@ namespace CuriousLib
         }
 
         /// <summary>
-        /// Gets whether a dataset is uniformly distributed or not
+        /// Gets whether a DataSet is uniformly distributed or not
         /// </summary>
         public bool IsUniform
         {
             get
             {
                 return this.TestForUniformity();
+            }
+        }
+
+        /// <summary>
+        /// Gets the whether a DataSet is exponentially distributed or not
+        /// </summary>
+        public bool IsExponential
+        {
+            get
+            {
+                return this.TestForExponentiality();
             }
         }
 
@@ -191,59 +239,157 @@ namespace CuriousLib
             return SmoothedDataSet;
         }
 
+        /// <summary>
+        /// Returns the outlier values of a DataSet
+        /// </summary>
+        /// <param name="VarianceCoefficient"></param>
+        /// <returns></returns>
+        public DataSet<double> DetectOutliers(int VarianceCoefficient)
+        {
+            double UpperLimit = VarianceCoefficient * this.StandartDeviation;
+            double LowerLimit = -VarianceCoefficient * this.StandartDeviation;
+            DataSet<double> OutlierSet = new DataSet<double>();
+            for (int i = 0; i < this.Size; i++)
+            {
+                if (Convert.ToDouble(this[i]) < LowerLimit || Convert.ToDouble(this[i]) > UpperLimit)
+                {
+                    OutlierSet.Add(Convert.ToDouble(this[i]));
+                }
+            }
+            return OutlierSet;
+        }
+
         #endregion
 
         #region Privates
 
-        private DataSetPattern pattern;
-
+        /// <summary>
+        /// Calculates the mean value of a DataSet
+        /// </summary>
+        /// <returns>double</returns>
         private double CalculateMean()
         {
             double mean;
             double total = 0;
-
             for (int i = 0; i < this.Count; i++)
             {
-                total = total + Convert.ToDouble(this[i]);
+                total += Convert.ToDouble(this[i]);
             }
-
             mean = Math.Round(total / this.Count, 2);
             return mean;
         }
 
+        /// <summary>
+        /// Calculates the median value of a DataSet
+        /// </summary>
+        /// <returns>double</returns>
+        private double CalculateMedian()
+        {
+            double median;
+            DataSet<double> OrderedDataSet = new DataSet<double>();
+            foreach (var item in this)
+            {
+                OrderedDataSet.Add(Convert.ToDouble(item));
+            }
+            OrderedDataSet.Sort();
+            if (OrderedDataSet.Size % 2 == 0)
+            {
+                median = (OrderedDataSet[OrderedDataSet.Size / 2] + OrderedDataSet[(OrderedDataSet.Size / 2) + 1]) / 2;
+            }
+            else
+            {
+                median = OrderedDataSet[(OrderedDataSet.Size + 1) / 2];
+            }
+            return median;
+        }
+
+        /// <summary>
+        /// Calculates the mode value of a DataSet
+        /// </summary>
+        /// <returns>double</returns>
+        /// <exception cref="Exception"></exception>
+        private double CalculateMode()
+        {
+            double mode;
+            DataSet<double> OrderedDataSet = new DataSet<double>();
+            foreach (var item in this)
+            {
+                OrderedDataSet.Add(Convert.ToDouble(item));
+            }
+            OrderedDataSet.Sort();
+            Dictionary<double, int> DataCountPairs = new Dictionary<double, int>();
+            double tentativeMode = OrderedDataSet[0];
+            int counter = 1;
+            for (int i = 0; i < OrderedDataSet.Size; i++)
+            {
+                if (i > 0)
+                {
+                    if (OrderedDataSet[i - 1] == OrderedDataSet[i])
+                    {
+                        counter++;
+                    }
+                    else
+                    {
+                        DataCountPairs.Add(tentativeMode, counter);
+                        tentativeMode = OrderedDataSet[i];
+                        counter = 1;
+                    }
+                }
+            }
+            if (DataCountPairs.Values.Max() == 1)
+            {
+                throw new Exception("There is no mode value in the DataSet");
+            }
+            mode = DataCountPairs.FirstOrDefault(x => x.Value == DataCountPairs.Values.Max()).Key;
+            return mode;
+        }
+
+        /// <summary>
+        /// Calculates the standart deviation value of a DataSet
+        /// </summary>
+        /// <returns>double</returns>
         private double CalculateStandartDeviation()
         {
             double standartDeviation;
             double sumOfSquares = 0;
-            double mean = this.Mean;
-
             for (int i = 0; i < this.Size; i++)
             {
-                sumOfSquares = sumOfSquares + Math.Pow(Convert.ToDouble(this[i]) - mean, 2);
+                sumOfSquares += Math.Pow(Convert.ToDouble(this[i]) - this.Mean, 2);
             }
-
             standartDeviation = Math.Round(Math.Sqrt(sumOfSquares / this.Size), 2);
             return standartDeviation;
         }
 
+        /// <summary>
+        /// Calculates the skewness value of a DataSet
+        /// </summary>
+        /// <returns>double</returns>
         private double CalculateSkewness()
         {
             double skewness;
-            double mean = this.Mean;
-            double sumOfSquares = 0;
-            double sumOfCubes = 0;
-
+            double sum = 0;
             for (int i = 0; i < this.Size; i++)
             {
-                sumOfCubes = sumOfCubes + Math.Pow(Convert.ToDouble(this[i]) - mean, 3);
-                sumOfSquares = sumOfSquares + Math.Pow(Convert.ToDouble(this[i]) - mean, 2);
+                sum += Math.Pow(Convert.ToDouble(this[i]) - this.Mean, 3);
             }
-
-            sumOfCubes = sumOfCubes / this.Size;
-            sumOfSquares = Math.Pow(Math.Sqrt(sumOfSquares / (this.Size - 1)), 3);
-            skewness = sumOfCubes / sumOfSquares;
-            skewness = Math.Round(skewness, 2);
+            skewness = Math.Round((sum / this.Size) / Math.Pow(this.StandartDeviation, 3), 2);
             return skewness;
+        }
+
+        /// <summary>
+        /// Calculates the kurtosis value of a DataSet
+        /// </summary>
+        /// <returns>double</returns>
+        private double CalculateKurtosis()
+        {
+            double kurtosis;
+            double sum = 0;
+            for (int i = 0; i < this.Size; i++)
+            {
+                sum += Math.Pow(Convert.ToDouble(this[i]) - this.Mean, 4);
+            }
+            kurtosis = Math.Round((sum / this.Size) / Math.Pow(this.StandartDeviation, 4), 2);
+            return kurtosis;
         }
 
         /// <summary>
@@ -386,6 +532,24 @@ namespace CuriousLib
             }
             // comparing the calculated chi square parameter and critical chi square parameter
             if (ChiSquareValue <= CriticalValue)
+            {
+                Hypothesis = true;
+            }
+            else
+            {
+                Hypothesis = false;
+            }
+            return Hypothesis;
+        }
+
+        /// <summary>
+        /// Conducts a test for exponential distribution
+        /// </summary>
+        /// <returns></returns>
+        private bool TestForExponentiality()
+        {
+            bool Hypothesis;
+            if (this.IsNormal == false && this.Skewness > 1.5)
             {
                 Hypothesis = true;
             }
