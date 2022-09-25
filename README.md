@@ -25,75 +25,66 @@ public class DataSet<T> : List<T>
 ## Class Structure
 
 ### DataSet
-| Properties | Data Type | Description |
-| ---------- | --------- | ----------- |
-| Pattern | Enum  | Gets or sets the pattern characteristic of a DataSet |
-| MinimumValue | Double | Gets the minimum value of a DataSet |
-| MaximumValue | Double | Gets the maximum value of a DataSet |
-| Range | Integer | Gets the range of a DataSet |
-| Size | Integer | Gets the size of a DataSet |
-| Mean | Double | Gets the mean of a DataSet |
-| Median | Double | Gets the median of a DataSet |
-| Mode | Double | Gets the mode of a DataSet |
-| StandartDeviation | Double | Gets the standart deviation of a DataSet |
-| Skewness | Double | Gets the skewness of a DataSet |
-| Kurtosis | Double | Gets the kurtosis of a DataSet |
-| IsNormal | Boolean | Gets whether a dataset is normal distributed or not |
-| IsUniform | Boolean | Gets whether a dataset is uniformly distributed or not |
-| IsExponential | Boolean | Gets whether a dataset is exponentially distributed or not |
-
-| Methods | Data Type | Description |
-| ------- | --------- | ----------- |
-| CalculateZvalue | Double | Calculates the standart Z value for a given X value from a DataSet |
-| Smooth | DataSet | Smooths a DataSet for a given alpha parameter |
-| DetectOutliers | DataSet | Returns the outlier values of a DataSet |
+| Field | Field Type | Description |
+| ----- | ---------- | ----------- |
+| Pattern | Property  | Gets or sets the pattern characteristic of a DataSet |
+| MinimumValue | Property | Gets the minimum value of a DataSet |
+| MaximumValue | Property | Gets the maximum value of a DataSet |
+| Range | Property | Gets the range of a DataSet |
+| Size | Property | Gets the size of a DataSet |
+| Mean | Property | Gets the mean of a DataSet |
+| Median | Property | Gets the median of a DataSet |
+| Mode | Property | Gets the mode of a DataSet |
+| StandartDeviation | Property | Gets the standart deviation of a DataSet |
+| Skewness | Property | Gets the skewness of a DataSet |
+| Kurtosis | Property | Gets the kurtosis of a DataSet |
+| IsNormal | Property | Gets whether a dataset is normal distributed or not |
+| IsUniform | Property | Gets whether a dataset is uniformly distributed or not |
+| IsExponential | Property | Gets whether a dataset is exponentially distributed or not |
+| CalculateZvalue | Function | Calculates the standart Z value for a given X value from a DataSet |
+| Smooth | Function | Smooths a DataSet for a given alpha parameter |
+| DetectOutliers | Function | Returns the outlier values of a DataSet |
 
 ### StationaryDataSet : DataSet
-| Methods | Data Type | Description |
-| ------- | --------- | ----------- |
-| MovingAverages | Double | Conducts point estimation of selected index using n-step moving averages |
-| ExponentialSmoothing | Double | Conducts point estimation of selected index using simple exponential smoothing with the alpha parameter |
+| Field | Field Type | Description |
+| ----- | ---------- | ----------- |
+| MovingAverages | Function | Conducts point estimation of selected index using n-step moving averages |
+| ExponentialSmoothing | Function | Conducts point estimation of selected index using simple exponential smoothing with the alpha parameter |
 
 ### TrendingDataSet : DataSet
-| Properties | Data Type | Description |
-| ---------- | --------- | ----------- |
-| Slope | Double | Gets the slope of a trending DataSet |
-| Intercept | Double | Gets the intercept of a trending DataSet |
-
-| Methods | Data Type | Description |
-| ------- | --------- | ----------- |
-| LinearRegression | Double | Conducts point estimation of independent variable X using linear regression line |
-| HoltsMethod | Double | Conducts point estimation of independent variable X using Holt's Method |
+| Field | Field Type | Description |
+| ----- | ---------- | ----------- |
+| Slope | Property | Gets the slope of a trending DataSet |
+| Intercept | Property | Gets the intercept of a trending DataSet |
+| LinearRegression | Function | Conducts point estimation of independent variable X using linear regression line |
+| HoltsMethod | Function | Conducts point estimation of independent variable X using Holt's Method |
 
 ### SeasonalDataSet : DataSet
-| Properties | Data Type | Description |
-| ---------- | --------- | ----------- |
-| NumberOfSeasons | Integer | Gets or sets the number of seasons in a seasonal DataSet |
-| SeasonSize | Integer | Gets the size of each season in a seasonal DataSet |
-| SeasonalFactors | Array | Gets the seasonal factors of a seasonal DataSet |
-
-| Methods | Data Type | Description |
-| ------- | --------- | ----------- |
-| SeasonalEstimate | Double | Conducts point estimation of independent variable X considering seasonality |
-| SeasonalEstimateWithTrend | Double | Conducts point estimation of independent variable X considering seasonality and trend |
-| Deseasonalize | DataSet | Removes the seasonal effect from a SeasonalDataSet |
+| Field | Field Type | Description |
+| ------| ---------- | ----------- |
+| NumberOfSeasons | Property | Gets or sets the number of seasons in a seasonal DataSet |
+| SeasonSize | Property | Gets the size of each season in a seasonal DataSet |
+| SeasonalFactors | Property | Gets the seasonal factors of a seasonal DataSet |
+| SeasonalEstimate | Function | Conducts point estimation of independent variable X considering seasonality |
+| SeasonalEstimateWithTrend | Function | Conducts point estimation of independent variable X considering seasonality and trend |
+| Deseasonalize | Function | Removes the seasonal effect from a SeasonalDataSet |
 
 ### Miscellaneous
-| Static Methods | Data Type | Description |
-| -------------- | --------- | ----------- |
-| CalculateMeanAbsoluteError | Double | Returns the mean absolute forecast error of a DataSet |
-| CalculateMeanSquaredError | Double | Returns the mean squared forecast error of a DataSet |
-| Covariance | Double | Calculates covariance of two DataSets |
-| Correlation | Double | Calculates coefficient of correlation between two DataSets |
-| Rsquared | Double | Calculates coefficient of determination (R Squared) between two DataSets |
+| Field | Field Type | Description |
+| ----- | ---------- | ----------- |
+| CalculateMeanAbsoluteError | Function | Returns the mean absolute forecast error of a DataSet |
+| CalculateMeanSquaredError | Function | Returns the mean squared forecast error of a DataSet |
+| Covariance | Function | Calculates covariance of two DataSets |
+| Correlation | Function | Calculates coefficient of correlation between two DataSets |
+| Rsquared | Function | Calculates coefficient of determination (R Squared) between two DataSets |
 
 ### Generators
-| Static Methods | Data Type | Description |
-| -------------- | --------- | ----------- |
-| GeneratingFromDataGridView | Void | Generating collection members from WinForms DataGridView Control (+3 overloads) |
-| GeneratingFromListBox | Void | Generating collection members from WinForms ListBox Control (+3 overloads) |
-| GeneratingFromSQL | Void | Generating collection members from SQL Server (+3 overloads) |
-| GeneratingFromAccessDB | Void | Generating collection members from MS Access Database (+3 overloads) |
+| Field | Field Type | Description |
+| ----- | ---------- | ----------- |
+| GeneratingFromDataGridView | Function | Generating collection members from WinForms DataGridView Control (+3 overloads) |
+| GeneratingFromListBox | Function | Generating collection members from WinForms ListBox Control (+3 overloads) |
+| GeneratingFromSQL | Function | Generating collection members from SQL Server (+3 overloads) |
+| GeneratingFromAccessDB | Function | Generating collection members from MS Access Database (+3 overloads) |
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
