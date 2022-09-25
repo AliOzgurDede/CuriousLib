@@ -27,7 +27,7 @@ namespace CuriousLib
         #region Properties
 
         /// <summary>
-        /// Gets or sets the number of seasons in a seasonal DataSet
+        /// Gets or sets the number of seasons in a SeasonalDataSet
         /// </summary>
         /// <remarks> DataSet is required to have seasonal pattern </remarks>
         public int NumberOfSeasons
@@ -45,15 +45,15 @@ namespace CuriousLib
             }
             set
             {
-                if (this.Pattern == DataSetPattern.Seasonal)
+                if (this.Pattern == DataSet<T>.DataSetPattern.Seasonal)
                 {
-                    if (this.Count % value == 0)
+                    if (this.Size % value == 0)
                     {
                         numberOfSeasons = value;
                     }
                     else
                     {
-                        throw new Exception("DataSetSize = 0(mod NumberOfSeasons) should be satisfied");
+                        throw new Exception("The remainder value when DataSet Size divided by value is not equal to zero");
                     }
                 }
                 else
@@ -62,9 +62,10 @@ namespace CuriousLib
                 }
             }
         }
+        private int numberOfSeasons;
 
         /// <summary>
-        /// Gets or sets the size of each season in a seasonal DataSet
+        /// Gets the size of each season in a SeasonalDataSet
         /// </summary>
         /// <remarks> DataSet is required to have seasonal pattern </remarks>
         public int SeasonSize
@@ -73,25 +74,7 @@ namespace CuriousLib
             {
                 if (this.Pattern == DataSetPattern.Seasonal)
                 {
-                    return seasonSize;
-                }
-                else
-                {
-                    throw new Exception("DataSet pattern is not valid. Seasonal pattern expected");
-                }
-            }
-            set
-            {
-                if (this.Pattern == DataSetPattern.Seasonal)
-                {
-                    if (this.Count % value == 0)
-                    {
-                        seasonSize = value;
-                    }
-                    else
-                    {
-                        throw new Exception("DataSetSize = 0(mod SeasonSize) should be satisfied");
-                    }
+                    return (this.Size / this.NumberOfSeasons);
                 }
                 else
                 {
@@ -101,23 +84,15 @@ namespace CuriousLib
         }
 
         /// <summary>
-        /// Gets the seasonal factors of a seasonal DataSet
+        /// Gets the seasonal factors of a SeasonalDataSet
         /// </summary>
-        /// <remarks> DataSet is required to have seasonal pattern </remarks>
         public double[] SeasonalFactors
         {
             get
             {
-                if (this.Pattern == DataSetPattern.Seasonal)
+                if (this.Pattern == DataSet<T>.DataSetPattern.Seasonal)
                 {
-                    try
-                    {
-                        return seasonalFactors = this.GetSeasonalFactors();
-                    }
-                    catch
-                    {
-                        throw new Exception("Unassigned properties");
-                    }
+                    return this.GetSeasonalFactors();
                 }
                 else
                 {
@@ -131,47 +106,88 @@ namespace CuriousLib
         #region Methods
 
         /// <summary>
-        /// Conducts point estimation of selected index using seasonal factors
+        /// Conducts point estimation of independent variable X considering seasonality
         /// </summary>
-        /// <param name="Index"></param>
-        /// <returns> Estimated Value </returns>
-        public double SeasonalEstimate(int Index)
+        /// <param name="X"></param>
+        /// <returns></returns>
+        public double SeasonalEstimate(int X)
         {
-            double seasonalEstimate;
-            seasonalEstimate = average * SeasonalFactors[Index % this.SeasonSize];
-            return seasonalEstimate;
+            double Estimate;
+
+            Estimate = this.Mean * this.SeasonalFactors[X % this.SeasonSize];
+
+            return Estimate;
+        }
+
+        /// <summary>
+        /// Conducts point estimation of independent variable X considering seasonality and trend
+        /// </summary>
+        /// <param name="X"></param>
+        /// <returns></returns>
+        public double SeasonalEstimateWithTrend(int X)
+        {
+            double Estimate = 0;
+
+            TrendingDataSet<double> DeseasonalizedSetWithTrend = new TrendingDataSet<double>();
+
+            this.Deseasonalize();
+
+            for (int i = 0; i < this.Size; i++)
+            {
+                DeseasonalizedSetWithTrend.Add(Convert.ToDouble(this[i]));
+            }
+
+            Estimate = DeseasonalizedSetWithTrend.LinearRegression(X);
+            Estimate *= this.SeasonalFactors[X % this.SeasonSize];
+
+            return Estimate;
+        }
+
+        /// <summary>
+        /// Removes the seasonal effect from a SeasonalDataSet
+        /// </summary>
+        /// <returns></returns>
+        public DataSet<double> Deseasonalize()
+        {
+            DataSet<double> deseasonalizedDataSet = new DataSet<double>();
+
+            for (int i = 0; i < this.Size; i++)
+            {
+                deseasonalizedDataSet.Add(Convert.ToDouble(this[i]) / this.SeasonalFactors[i % this.SeasonSize]);
+            }
+
+            return deseasonalizedDataSet;
         }
 
         #endregion
 
         #region Privates
 
-        private double[] seasonalFactors;
-        private int seasonSize;
-        private int numberOfSeasons;
-        private double average;
+        /// <summary>
+        /// Calculates seasonal factors for each items in cycle
+        /// </summary>
+        /// <returns></returns>
         private double[] GetSeasonalFactors()
         {
-            double[] averageRatios = new double[this.SeasonSize];
-            average = 0;
+            double[] seasonalFactors = new double[this.SeasonSize];
 
-            for (int i = 0; i < this.Count; i++)
+            double[,] seasonMatrix = new double[this.SeasonSize, this.NumberOfSeasons];
+
+            for (int i = 0; i < this.Size; i++)
             {
-                average = average + Convert.ToDouble(this[i]);
+                seasonMatrix[i % this.SeasonSize, i / this.SeasonSize] = Convert.ToDouble(this[i]) / this.Mean;
             }
-            average = Math.Round(average / this.Count, 2);
 
             for (int i = 0; i < this.SeasonSize; i++)
             {
-                for (int j = i; j < this.Count; j += this.SeasonSize)
+                for (int j = 0; j < this.NumberOfSeasons; j++)
                 {
-                    averageRatios[i] += (Convert.ToDouble(this[j]) / average);
+                    seasonalFactors[i] += seasonMatrix[i, j];
                 }
-
-                averageRatios[i] /= this.NumberOfSeasons;
+                seasonalFactors[i] /= this.NumberOfSeasons;
             }
 
-            return averageRatios;
+            return seasonalFactors;
         }
 
         #endregion
