@@ -246,8 +246,8 @@ namespace CuriousLib
         /// <returns></returns>
         public DataSet<double> DetectOutliers(int VarianceCoefficient)
         {
-            double UpperLimit = VarianceCoefficient * this.StandartDeviation;
-            double LowerLimit = -VarianceCoefficient * this.StandartDeviation;
+            double UpperLimit = this.Mean + VarianceCoefficient * this.StandartDeviation;
+            double LowerLimit = this.Mean - VarianceCoefficient * this.StandartDeviation;
             DataSet<double> OutlierSet = new DataSet<double>();
             for (int i = 0; i < this.Size; i++)
             {
@@ -271,11 +271,11 @@ namespace CuriousLib
         {
             double mean;
             double total = 0;
-            for (int i = 0; i < this.Count; i++)
+            for (int i = 0; i < this.Size; i++)
             {
                 total += Convert.ToDouble(this[i]);
             }
-            mean = Math.Round(total / this.Count, 2);
+            mean = Math.Round(total / this.Size, 2);
             return mean;
         }
 
