@@ -41,6 +41,7 @@ namespace CuriousLib
                 {
                     Forecast += Convert.ToDouble(this[Convert.ToInt32(this.Size) - i]);
                 }
+                Forecast /= Step;
                 return Forecast;
             }
             else
