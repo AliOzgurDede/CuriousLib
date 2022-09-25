@@ -8,7 +8,7 @@
   
 C# Class Library for Statistical Computations  
     
-![release](https://img.shields.io/badge/release-v1.3-green) ![nuget](https://img.shields.io/nuget/v/CuriousLib) ![license](https://img.shields.io/github/license/AliOzgurDede/CuriousLib?color=red) 
+![release](https://img.shields.io/badge/release-v2.0-green) ![nuget](https://img.shields.io/nuget/v/CuriousLib) ![license](https://img.shields.io/github/license/AliOzgurDede/CuriousLib?color=red) 
   
 </div>
 
@@ -63,17 +63,20 @@ public class DataSet<T> : List<T>
 | Methods | Data Type | Description |
 | ------- | --------- | ----------- |
 | LinearRegression | Double | Conducts point estimation of independent variable X using linear regression line |
+| HoltsMethod | Double | Conducts point estimation of independent variable X using Holt's Method |
 
 ### SeasonalDataSet : DataSet
 | Properties | Data Type | Description |
 | ---------- | --------- | ----------- |
 | NumberOfSeasons | Integer | Gets or sets the number of seasons in a seasonal DataSet |
-| SeasonSize | Integer | Gets or sets the size of each season in a seasonal DataSet |
+| SeasonSize | Integer | Gets the size of each season in a seasonal DataSet |
 | SeasonalFactors | Array | Gets the seasonal factors of a seasonal DataSet |
 
 | Methods | Data Type | Description |
 | ------- | --------- | ----------- |
-| SeasonalEstimate | Double | Conducts point estimation of selected index using seasonal factors |
+| SeasonalEstimate | Double | Conducts point estimation of independent variable X considering seasonality |
+| SeasonalEstimateWithTrend | Double | Conducts point estimation of independent variable X considering seasonality and trend |
+| Deseasonalize | DataSet | Removes the seasonal effect from a SeasonalDataSet |
 
 ### Miscellaneous
 | Static Methods | Data Type | Description |
@@ -98,4 +101,4 @@ public class DataSet<T> : List<T>
 ## Used Technologies
 Visual Studio  
 C#  
-.NET 5.0  
+.NET 6.0  
