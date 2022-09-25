@@ -20,7 +20,7 @@ namespace CuriousLib
         /// </summary>
         /// <param name="dataset"></param>
         /// <param name="dataGridView"></param>
-        public static void GeneratingFromDataGridView(DataSet<double> dataset, DataGridView dataGridView)
+        public static void GeneratingFromDataGridView(DataSet<double> dataset, DataGridView dataGridView, int ColumnIndex)
         {
             int rows = dataGridView.Rows.Count;
 
@@ -28,7 +28,7 @@ namespace CuriousLib
             {
                 if (dataGridView[0, i].Value != null)
                 {
-                    double value = Double.Parse(dataGridView[0, i].Value.ToString());
+                    double value = Double.Parse(dataGridView[ColumnIndex, i].Value.ToString());
                     dataset.Add(value);
                 }
             }
