@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
+using System.Data;
 
 namespace CuriousLib
 {
@@ -14,39 +15,53 @@ namespace CuriousLib
         /// <summary>
         /// Returns the mean absolute forecast error of a DataSet
         /// </summary>
-        /// <param name="dataSet"></param>
-        /// <param name="forecastedSet"></param>
+        /// <param name="dataSet1"></param>
+        /// <param name="dataSet2"></param>
         /// <returns>double</returns>
-        public static double CalculateMeanAbsoluteError(DataSet<double> dataSet, DataSet<double> forecastedSet)
+        public static double CalculateMeanAbsoluteError(DataSet<double> dataSet1, DataSet<double> dataSet2)
         {
-            double MAE = 0;
-
-            for (int i = 0; i < dataSet.Size; i++)
+            if (dataSet1.Size == dataSet2.Size)
             {
-                MAE += Math.Abs(dataSet[i] - forecastedSet[i]);
-            }
+                double MAE = 0;
 
-            MAE /= dataSet.Size;
-            return MAE;
+                for (int i = 0; i < dataSet1.Size; i++)
+                {
+                    MAE += Math.Abs(dataSet1[i] - dataSet2[i]);
+                }
+
+                MAE /= dataSet1.Size;
+                return MAE;
+            }
+            else
+            {
+                throw new Exception("DataSets are not at the same size");
+            }
         }
 
         /// <summary>
         /// Returns the mean squared forecast error of a DataSet
         /// </summary>
-        /// <param name="dataSet"></param>
-        /// <param name="forecastedSet"></param>
+        /// <param name="dataSet1"></param>
+        /// <param name="dataSet2"></param>
         /// <returns>double</returns>
-        public static double CalculateMeanSquaredError(DataSet<double> dataSet, DataSet<double> forecastedSet)
+        public static double CalculateMeanSquaredError(DataSet<double> dataSet1, DataSet<double> dataSet2)
         {
-            double MSE = 0;
-
-            for (int i = 0; i < dataSet.Size; i++)
+            if (dataSet1.Size == dataSet2.Size)
             {
-                MSE += Math.Pow(dataSet[i] - forecastedSet[i], 2);
-            }
+                double MSE = 0;
 
-            MSE /= dataSet.Size;
-            return MSE;
+                for (int i = 0; i < dataSet1.Size; i++)
+                {
+                    MSE += Math.Pow(dataSet1[i] - dataSet2[i], 2);
+                }
+
+                MSE /= dataSet1.Size;
+                return MSE;
+            }
+            else
+            {
+                throw new Exception("DataSets are not at the same size");
+            }
         }
 
         /// <summary>
@@ -54,20 +69,26 @@ namespace CuriousLib
         /// </summary>
         /// <param name="dataSet1"></param>
         /// <param name="dataSet2"></param>
-        /// <param name="ReferenceInterval"></param>
         /// <returns>double</returns>
-        public static double Covariance(DataSet<double> dataSet1, DataSet<double> dataSet2, int ReferenceInterval)
+        public static double Covariance(DataSet<double> dataSet1, DataSet<double> dataSet2)
         {
-            double covariance;
-            double sumOfMultiples = 0;
-
-            for (int i = 0; i < ReferenceInterval; i++)
+            if (dataSet1.Size == dataSet2.Size)
             {
-                sumOfMultiples += ((Convert.ToDouble(dataSet1[i]) - dataSet1.Mean) * (Convert.ToDouble(dataSet2[i]) - dataSet2.Mean));
-            }
+                double covariance;
+                double sumOfMultiples = 0;
 
-            covariance = sumOfMultiples / ReferenceInterval;
-            return covariance;
+                for (int i = 0; i < dataSet1.Size; i++)
+                {
+                    sumOfMultiples += ((Convert.ToDouble(dataSet1[i]) - dataSet1.Mean) * (Convert.ToDouble(dataSet2[i]) - dataSet2.Mean));
+                }
+
+                covariance = sumOfMultiples / dataSet1.Size;
+                return covariance;
+            }
+            else
+            {
+                throw new Exception("DataSets are not at the same size");
+            }
         }
 
         /// <summary>
@@ -75,11 +96,10 @@ namespace CuriousLib
         /// </summary>
         /// <param name="dataSet1"></param>
         /// <param name="dataSet2"></param>
-        /// <param name="ReferenceInterval"></param>
         /// <returns>double</returns>
-        public static double Correlation(DataSet<double> dataSet1, DataSet<double> dataSet2, int ReferenceInterval)
+        public static double Correlation(DataSet<double> dataSet1, DataSet<double> dataSet2)
         {
-            double correlation = Covariance(dataSet1, dataSet2, ReferenceInterval) / (dataSet1.StandartDeviation * dataSet1.StandartDeviation);
+            double correlation = Covariance(dataSet1, dataSet2) / (dataSet1.StandartDeviation * dataSet2.StandartDeviation);
             return correlation;
         }
 
@@ -88,11 +108,10 @@ namespace CuriousLib
         /// </summary>
         /// <param name="dataSet1"></param>
         /// <param name="dataSet2"></param>
-        /// <param name="ReferenceInterval"></param>
         /// <returns>double</returns>
-        public static double Rsquared(DataSet<double> dataSet1, DataSet<double> dataSet2, int ReferenceInterval)
+        public static double Rsquared(DataSet<double> dataSet1, DataSet<double> dataSet2)
         {
-            double rs = Correlation(dataSet1, dataSet2, ReferenceInterval);
+            double rs = Correlation(dataSet1, dataSet2);
             return rs;
         }
     }
