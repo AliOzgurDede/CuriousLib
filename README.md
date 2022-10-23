@@ -69,7 +69,7 @@ public class DataSet<T> : List<T>
 | SeasonalEstimateWithTrend | Function | Conducts point estimation of independent variable X considering seasonality and trend |
 | Deseasonalize | Function | Removes the seasonal effect from a SeasonalDataSet |
 
-### Miscellaneous
+### Miscellaneous.Measurements
 | Field | Field Type | Description |
 | ----- | ---------- | ----------- |
 | CalculateMeanAbsoluteError | Function | Returns the mean absolute forecast error of a DataSet |
@@ -78,13 +78,42 @@ public class DataSet<T> : List<T>
 | Correlation | Function | Calculates coefficient of correlation between two DataSets |
 | Rsquared | Function | Calculates coefficient of determination (R Squared) between two DataSets |
 
-### Generators
+### Miscellaneous.Generators
 | Field | Field Type | Description |
 | ----- | ---------- | ----------- |
-| GeneratingFromDataGridView | Function | Generating collection members from WinForms DataGridView Control (+3 overloads) |
+| GeneratingFromDataGridView | Function | Generating collection members from WinForms DataGridView Control (+5 overloads) |
 | GeneratingFromListBox | Function | Generating collection members from WinForms ListBox Control (+3 overloads) |
-| GeneratingFromSQL | Function | Generating collection members from SQL Server (+3 overloads) |
-| GeneratingFromAccessDB | Function | Generating collection members from MS Access Database (+3 overloads) |
+| GeneratingFromSQL | Function | Generating collection members from SQL Server (+5 overloads) |
+| GeneratingFromAccessDB | Function | Generating collection members from MS Access Database (+5 overloads) |
+
+### Clustering.Kmeans
+| Field | Field Type | Description |
+| ----- | ---------- | ----------- |
+| RunAlgorithm | Function | Executes K Means Clustering Algoritm |
+| Report | Function | Generates an algorithm iteration report to a specified file path |
+| Assignments | Collection | Collection that stores data point cluster center assignments |
+| Iterations | Collection | Collection that stores iterations |
+
+### Clustering.DataPoint
+| Field | Field Type | Description |
+| ----- | ---------- | ----------- |
+| ID | Property | Gets or sets the ID of a DataPoint |
+| CoordinateX | Property | Gets or sets the X coordinate of a DataPoint |
+| CoordinateY | Property | Gets or sets the Y coordinate of a DataPoint |
+
+### Clustering.ClusterCenter
+| Field | Field Type | Description |
+| ----- | ---------- | ----------- |
+| ID | Property | Gets or sets the ID of a ClusterCenter |
+| CoordinateX | Property | Gets or sets the X coordinate of a ClusterCenter |
+| CoordinateY | Property | Gets or sets the Y coordinate of a ClusterCenter |
+
+### Clustering.Iteration
+| Field | Field Type | Description |
+| ----- | ---------- | ----------- |
+| ID | Property | Gets or sets the ID of an Iteration |
+| TentativeCluster | Struct | Tentative cluster structure belongs to an iteration |
+| ClustersOfIteration | Collection | Collection that stores cluster assignments of an iteration |
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
@@ -92,4 +121,4 @@ public class DataSet<T> : List<T>
 ## Used Technologies
 Visual Studio  
 C#  
-.NET 6.0  
+.NET 5.0  
