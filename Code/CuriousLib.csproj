@@ -5,8 +5,8 @@
     <UseWindowsForms>true</UseWindowsForms>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	<AssemblyName>CuriousLib</AssemblyName>
-    <Description>C# Class Library for Data Analysis</Description>
-	<Version>2.0</Version>
+    <Description>C# Library for Data Analysis</Description>
+	<Version>3.0</Version>
     <Authors>Ali Özgür Dede</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/AliOzgurDede/CuriousLib</RepositoryUrl>
