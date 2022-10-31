@@ -6,7 +6,7 @@
 
 <div align="center">
   
-C# Class Library for Statistical Computations  
+C# Library for Data Analysis  
     
 ![release](https://img.shields.io/badge/release-v3.0-green) ![nuget](https://img.shields.io/nuget/v/CuriousLib) ![license](https://img.shields.io/github/license/AliOzgurDede/CuriousLib?color=red) 
   
