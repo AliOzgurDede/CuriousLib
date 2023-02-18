@@ -8,7 +8,7 @@
   
 C# Library for Data Analysis  
     
-![release](https://img.shields.io/badge/release-v3.0-green) ![nuget](https://img.shields.io/nuget/v/CuriousLib) ![downloads](https://img.shields.io/nuget/dt/CuriousLib?color=orange)
+![release](https://img.shields.io/badge/release-v3.1-green) ![nuget](https://img.shields.io/nuget/v/CuriousLib) ![downloads](https://img.shields.io/nuget/dt/CuriousLib?color=orange)
   
 </div>
 
