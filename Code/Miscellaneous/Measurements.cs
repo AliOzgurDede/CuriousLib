@@ -18,7 +18,7 @@ namespace CuriousLib.Miscellaneous
         /// <param name="dataSet1"></param>
         /// <param name="dataSet2"></param>
         /// <returns>double</returns>
-        public static double CalculateMeanAbsoluteError(DataSet<double> dataSet1, DataSet<double> dataSet2)
+        public static double MeanAbsoluteError(DataSet<double> dataSet1, DataSet<double> dataSet2)
         {
             if (dataSet1.Size == dataSet2.Size)
             {
@@ -44,7 +44,7 @@ namespace CuriousLib.Miscellaneous
         /// <param name="dataSet1"></param>
         /// <param name="dataSet2"></param>
         /// <returns>double</returns>
-        public static double CalculateMeanSquaredError(DataSet<double> dataSet1, DataSet<double> dataSet2)
+        public static double MeanSquaredError(DataSet<double> dataSet1, DataSet<double> dataSet2)
         {
             if (dataSet1.Size == dataSet2.Size)
             {
@@ -111,7 +111,7 @@ namespace CuriousLib.Miscellaneous
         /// <returns>double</returns>
         public static double Rsquared(DataSet<double> dataSet1, DataSet<double> dataSet2)
         {
-            double rs = Correlation(dataSet1, dataSet2);
+            double rs = Math.Pow(Correlation(dataSet1, dataSet2),2);
             return rs;
         }
     }
