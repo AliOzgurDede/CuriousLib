@@ -72,8 +72,8 @@ public class DataSet<T> : List<T>
 ### Miscellaneous.Measurements
 | Field | Field Type | Description |
 | ----- | ---------- | ----------- |
-| CalculateMeanAbsoluteError | Function | Returns the mean absolute forecast error of a DataSet |
-| CalculateMeanSquaredError | Function | Returns the mean squared forecast error of a DataSet |
+| MeanAbsoluteError | Function | Returns the mean absolute forecast error of a DataSet |
+| MeanSquaredError | Function | Returns the mean squared forecast error of a DataSet |
 | Covariance | Function | Calculates covariance of two DataSets |
 | Correlation | Function | Calculates coefficient of correlation between two DataSets |
 | Rsquared | Function | Calculates coefficient of determination (R Squared) between two DataSets |
