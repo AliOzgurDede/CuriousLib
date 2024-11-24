@@ -8,7 +8,7 @@
   
 C# Library for Data Analysis  
     
-![release](https://img.shields.io/badge/release-v3.1-green) ![nuget](https://img.shields.io/nuget/v/CuriousLib) ![downloads](https://img.shields.io/nuget/dt/CuriousLib?color=orange)
+![release](https://img.shields.io/badge/release-v3.2-green) ![nuget](https://img.shields.io/nuget/v/CuriousLib) ![downloads](https://img.shields.io/nuget/dt/CuriousLib?color=orange)
   
 </div>
 
@@ -44,6 +44,8 @@ public class DataSet<T> : List<T>
 | CalculateZvalue | Function | Calculates the standart Z value for a given X value from a DataSet |
 | Smooth | Function | Smooths a DataSet for a given alpha parameter |
 | DetectOutliers | Function | Returns the outlier values of a DataSet |
+| Normalize | Function | Normalizes a DataSet with min-max scaling |
+| Standardize | Function | Standardizes a DataSet with Z values |
 
 ### StationaryDataSet : DataSet
 | Field | Field Type | Description |
@@ -121,4 +123,4 @@ public class DataSet<T> : List<T>
 ## Used Technologies
 Visual Studio  
 C#  
-.NET 5.0  
+.NET 9.0
