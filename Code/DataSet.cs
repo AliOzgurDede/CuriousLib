@@ -259,6 +259,38 @@ namespace CuriousLib
             return OutlierSet;
         }
 
+        /// <summary>
+        /// Normalizes a DataSet with min-max scaling
+        /// </summary>
+        /// <returns></returns>
+        public DataSet<double> Normalize()
+        {
+            double NewItem;
+            DataSet<double> NormalizedDataSet = new DataSet<double>();
+            for (int i = 0; i < this.Size; i++)
+            {
+                NewItem = (Convert.ToDouble(this[i]) - this.MinimumValue) / (this.MaximumValue - this.MinimumValue);
+                NormalizedDataSet.Add(NewItem);
+            }
+            return NormalizedDataSet;
+        }
+
+        /// <summary>
+        /// Standardizes a DataSet with Z values
+        /// </summary>
+        /// <returns></returns>
+        public DataSet<double> Standardize()
+        {
+            double NewItem;
+            DataSet<double> StandardizedDataSet = new DataSet<double>();
+            for (int i = 0; i < this.Size; i++)
+            {
+                NewItem = CalculateZvalue(Convert.ToDouble(this[i]));
+                StandardizedDataSet.Add(NewItem);
+            }
+            return StandardizedDataSet;
+        }
+
         #endregion
 
         #region Privates
