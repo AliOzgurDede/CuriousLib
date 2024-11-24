@@ -326,11 +326,11 @@ namespace CuriousLib
             OrderedDataSet.Sort();
             if (OrderedDataSet.Size % 2 == 0)
             {
-                median = (OrderedDataSet[OrderedDataSet.Size / 2] + OrderedDataSet[(OrderedDataSet.Size / 2) + 1]) / 2;
+                median = (OrderedDataSet[(OrderedDataSet.Size / 2) - 1] + OrderedDataSet[OrderedDataSet.Size / 2]) / 2;
             }
             else
             {
-                median = OrderedDataSet[(OrderedDataSet.Size + 1) / 2];
+                median = OrderedDataSet[(OrderedDataSet.Size - 1) / 2];
             }
             return median;
         }
@@ -350,22 +350,27 @@ namespace CuriousLib
             }
             OrderedDataSet.Sort();
             Dictionary<double, int> DataCountPairs = new Dictionary<double, int>();
-            double tentativeMode = OrderedDataSet[0];
-            int counter = 1;
             for (int i = 0; i < OrderedDataSet.Size; i++)
             {
-                if (i > 0)
+                if (DataCountPairs.ContainsKey(OrderedDataSet[i]))
                 {
-                    if (OrderedDataSet[i - 1] == OrderedDataSet[i])
+                    continue;
+                }
+                else
+                {
+                    int counter = 0;
+                    for (int j = 0; j < OrderedDataSet.Size; j++)
                     {
-                        counter++;
+                        if (OrderedDataSet[i] == OrderedDataSet[j])
+                        {
+                            counter++;
+                        }
+                        else
+                        {
+                            continue;
+                        }
                     }
-                    else
-                    {
-                        DataCountPairs.Add(tentativeMode, counter);
-                        tentativeMode = OrderedDataSet[i];
-                        counter = 1;
-                    }
+                    DataCountPairs.Add(OrderedDataSet[i], counter);
                 }
             }
             if (DataCountPairs.Values.Max() == 1)
